@@ -4,21 +4,16 @@ var bodyParser = require('body-parser');
 var errorHandler = require('errorhandler');
 var methodOverride = require('method-override');
 var hostname = process.env.HOSTNAME || 'localhost';
-var port = 8080;
+var port = 8081;
 
 app.get("/", function (req, res) {
       res.redirect("/index.html");
 });
 
-
 app.get("/hello", function (req, res) {
     var name = req.query.name;
     res.send("hello "+ name); // send response body
 });
-
-
-
-
 
 app.use(methodOverride());
 app.use(bodyParser());
