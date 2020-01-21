@@ -14,3 +14,10 @@ http://localhost:1234/sub?a=1&b=4
 http://localhost:1234/mul?a=1&b=4
 
 http://localhost:1234/div?a=1&b=4
+
+
+## Usage (handout)
+
+$ `node mathServer.js`
+
+got to <http://127.0.0.1:1234> in your browser.
