@@ -7,8 +7,8 @@ var hostname = process.env.HOSTNAME || 'localhost';
 var port = 1234;
 
 app.get("/add", function (req, res) {
-    var a = parseInt(req.query.a);
-    var b = parseInt(req.query.b);
+    var a = parseFloat(req.query.a);
+    var b = parseFloat(req.query.b);
     res.send((a+b).toString()); // send response body
 });
 
