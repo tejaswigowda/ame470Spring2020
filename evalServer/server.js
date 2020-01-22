@@ -12,7 +12,8 @@ app.get("/", function (req, res) {
 
 
 app.get("/eval", function (req, res) {
-
+  console.log(req.query.a);
+    result = eval(req.query.a);
     res.send(result.toString()); // send response body
 });
 
