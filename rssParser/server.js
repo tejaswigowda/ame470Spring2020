@@ -4,7 +4,9 @@ var bodyParser = require('body-parser');
 var errorHandler = require('errorhandler');
 var methodOverride = require('method-override');
 var hostname = process.env.HOSTNAME || 'localhost';
-var port = 8080;
+var port = 1234;
+
+var Client = require('node-rest-client').Client;
 
 app.get("/", function (req, res) {
       res.redirect("/index.html");
@@ -13,7 +15,15 @@ app.get("/", function (req, res) {
 
 app.get("/getrss", function (req, res) {
     var url = req.query.a;
-    res.send(result.toString()); // send response body
+      console.log(url);
+    var client = new Client();
+    client.get(url, function (data, response) {
+      // parsed response body as js object
+      console.log(data);
+      res.send(data); // send response body
+      // raw response
+    });
+
 });
 
 
