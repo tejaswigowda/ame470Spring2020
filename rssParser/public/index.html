@@ -28,13 +28,26 @@
       })
     }
 
+    var currFeedData = {}
 
     function feedSelected(index)
     {
       var url = allFeeds[index];
       loadFile("./getrss?a=" + url, function(data){
-        document.getElementById("currFeedList").innerHTML = data;
+       currFeedData = JSON.parse(data);
+       var allItems = currFeedData.feed.results;
+       var markup = "";
+       for (var i = 0; i < allItems.length; i++){
+         markup += "<button onclick='itemSelected("+ i + ")'> <img src='"+ allItems[i].artworkUrl100 + "'><h1>" + allItems[i].name + "</h1><h2>" + allItems[i].artistName + "</h2></button>";
+       }
+        document.getElementById("currFeedList").innerHTML = markup;
       });
+    }
+
+    function itemSelected(index){
+      var feedData = currFeedData.feed.results[index];
+      var markup = JSON.stringify(feedData);
+      document.getElementById("feedDetails").innerHTML = markup;
     }
   </script>
 </head>
