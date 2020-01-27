@@ -4,9 +4,9 @@
   <script src='asyncReq.js'> </script>
 
   <script>
-    function calc(){
+    function addFeed(){
       var a = document.getElementById("valA").value;
-      var url = "./getrss?a=" + encodeURIComponent(a);
+      var url = "./addfeed?a=" + encodeURIComponent(a);
       loadFile(url ,function(d){
         document.getElementById("result").innerHTML = d;
       })
@@ -16,10 +16,13 @@
 
 <body>
 
+<div id='feedList'></div>
+<div id='currFeedList'></div>
+<div id='feedDetails'></div>
+
+
   <textarea id='valA'></textarea>
-  
-    <br>
-  <button onclick='calc()'> Get Data</button>
+  <button onclick='addFeed()'> Add Feed </button>
 
   <div id='result'> </div>'
 </body>

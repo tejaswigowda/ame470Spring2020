@@ -21,9 +21,7 @@ app.get("/getrss", function (req, res) {
       // parsed response body as js object
       console.log(data);
       res.send(data); // send response body
-      // raw response
     });
-
 });
 
 
