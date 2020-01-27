@@ -6,10 +6,10 @@
   <script>
     function addFeed(){
       var a = document.getElementById("valA").value;
-      loadFile(url ,function(d){
-        document.getElementById("result").innerHTML = d;
       var url = "./addfeed?a=" + encodeURIComponent(a);
-      })
+      loadFile(url, function(data){
+        alert("feed added!");
+      });
     }
   </script>
 </head>
