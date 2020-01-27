@@ -6,9 +6,9 @@
   <script>
     function addFeed(){
       var a = document.getElementById("valA").value;
-      var url = "./addfeed?a=" + encodeURIComponent(a);
       loadFile(url ,function(d){
         document.getElementById("result").innerHTML = d;
+      var url = "./addfeed?a=" + encodeURIComponent(a);
       })
     }
   </script>

@@ -12,6 +12,18 @@ app.get("/", function (req, res) {
       res.redirect("/index.html");
 });
 
+var allFeeds = [];
+
+app.get("/addfeed", function (req, res) {
+    var url = req.query.a;
+    allFeeds.push(url)
+});
+
+
+app.get("/getallfeeds", function (req, res) {
+    var url = req.query.a;
+    res.send(JSON.stringify(allFeeds)); // send response body
+});
 
 app.get("/getrss", function (req, res) {
     var url = req.query.a;
