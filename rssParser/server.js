@@ -16,7 +16,8 @@ var allFeeds = [];
 
 app.get("/addfeed", function (req, res) {
     var url = req.query.a;
-    allFeeds.push(url)
+    allFeeds.push(url);
+    res.end("1");
 });
 
 

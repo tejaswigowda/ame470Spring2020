@@ -8,13 +8,38 @@
       var a = document.getElementById("valA").value;
       var url = "./addfeed?a=" + encodeURIComponent(a);
       loadFile(url, function(data){
-        alert("feed added!");
+        getAllFeeds();
+      });
+    }
+
+    function start(){
+      getAllFeeds();
+    }
+
+    allFeeds = [];
+    function getAllFeeds(){
+      loadFile("./getallfeeds", function(data){
+        allFeeds = JSON.parse(data);
+        var markup = "";
+        for(var i = 0; i < allFeeds.length; i++){
+          markup = markup + "<button onclick='feedSelected("+ i + ")'>" + allFeeds[i] + "</button>";
+        }
+        document.getElementById("feedList").innerHTML = markup;
+      })
+    }
+
+
+    function feedSelected(index)
+    {
+      var url = allFeeds[index];
+      loadFile("./getrss?a=" + url, function(data){
+        document.getElementById("currFeedList").innerHTML = data;
       });
     }
   </script>
 </head>
 
-<body>
+<body onload='start()'>
 
 <div id='feedList'></div>
 <div id='currFeedList'></div>
