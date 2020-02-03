@@ -20,9 +20,7 @@ app.get("/addfeed", function (req, res) {
     res.end("1");
 });
 
-
 app.get("/getallfeeds", function (req, res) {
-    var url = req.query.a;
     res.send(JSON.stringify(allFeeds)); // send response body
 });
 
@@ -36,10 +34,6 @@ app.get("/getrss", function (req, res) {
       res.send(data); // send response body
     });
 });
-
-
-
-
 
 app.use(methodOverride());
 app.use(bodyParser());
