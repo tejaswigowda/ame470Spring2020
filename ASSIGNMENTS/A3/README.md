@@ -13,7 +13,8 @@ https://www.w3schools.com/css/
 ## Usage
 
 1. cd to `rssViewer` folder
-2. $ `node server.js`
+2. $ `npm install`
+3. $ `node server.js`
 
 
 
