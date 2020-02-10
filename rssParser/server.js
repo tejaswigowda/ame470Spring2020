@@ -5,6 +5,13 @@ var errorHandler = require('errorhandler');
 var methodOverride = require('method-override');
 var hostname = process.env.HOSTNAME || 'localhost';
 var port = 1234;
+var MS = require("mongoskin");
+
+var db = MS.db("127.0.0.1:27017/rssParser")
+
+db.collection("data").find().toArray(function(err, result){
+  console.log(err, result)
+});
 
 var Client = require('node-rest-client').Client;
 
