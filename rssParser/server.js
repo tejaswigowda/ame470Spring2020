@@ -10,7 +10,9 @@ var MS = require("mongoskin");
 var db = MS.db("mongodb://127.0.0.1:27017/rssParser")
 
 db.collection("data").remove({}, function(err, result){
-  console.log(err, result)
+  if(!err){
+    console.log("success");
+  }
 });
 
 db.collection("data").find().toArray(function(err, result){
