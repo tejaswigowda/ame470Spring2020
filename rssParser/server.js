@@ -8,8 +8,15 @@ var port = 1234;
 var MS = require("mongoskin");
 
 var db = MS.db("mongodb://127.0.0.1:27017/rssParser")
-
+/*
 db.collection("data").remove({}, function(err, result){
+  if(!err){
+    console.log("success");
+  }
+});
+
+
+db.collection("data").insert({id:1213, url:"https://rss.itunes.apple.com/api/v1/us/apple-music/coming-soon/all/10/explicit.json"}, function(err, result){
   if(!err){
     console.log("success");
   }
@@ -19,6 +26,7 @@ db.collection("data").find().toArray(function(err, result){
   console.log(err, result)
 });
 
+*/
 var Client = require('node-rest-client').Client;
 
 app.get("/", function (req, res) {
@@ -29,12 +37,22 @@ var allFeeds = [];
 
 app.get("/addfeed", function (req, res) {
     var url = req.query.a;
-    allFeeds.push(url);
-    res.end("1");
+    var x = {
+      id:new Date().getTime(),
+      url: url
+    }
+
+  db.collection("data").insert(x, function(err, result){
+    if(!err){
+      res.end("1");
+    }
+  });
 });
 
 app.get("/getallfeeds", function (req, res) {
-    res.send(JSON.stringify(allFeeds)); // send response body
+  db.collection("data").find().toArray(function(err, result){
+      res.send(JSON.stringify(result)); // send response body
+  });
 });
 
 app.get("/getrss", function (req, res) {
