@@ -1,0 +1,94 @@
+<html>
+
+<head>
+  <script src='asyncReq.js'> </script>
+
+  <script>
+    function addFeed(){
+      var a = document.getElementById("valA").value;
+      var url = "./addfeed?a=" + encodeURIComponent(a);
+      loadFile(url, function(data){
+        getAllFeeds();
+      });
+    }
+
+    function start(){
+      getAllFeeds();
+    }
+
+    allFeeds = [];
+    function getAllFeeds(){
+      document.getElementById("currFeedListWrapper").style.display = "none";
+      document.getElementById("feedDetailsWrapper").style.display = "none";
+      loadFile("./getallfeeds", function(data){
+        allFeeds = JSON.parse(data);
+        var markup = "";
+        for(var i = 0; i < allFeeds.length; i++){
+          markup = markup + "<button onclick='feedSelected("+ i + ")'>" + allFeeds[i].url + "</button>";
+        }
+        document.getElementById("feedList").innerHTML = markup;
+      })
+    }
+
+    var currFeedData = {}
+
+    function feedSelected(index)
+    {
+      var url = allFeeds[index].url;
+      loadFile("./getrss?a=" + url, function(data){
+       currFeedData = JSON.parse(data);
+       var allItems = currFeedData.feed.results;
+       var markup = "";
+       for (var i = 0; i < allItems.length; i++){
+         markup += "<button onclick='itemSelected("+ i + ")'> <img src='"+ allItems[i].artworkUrl100 + "'><h1>" + allItems[i].name + "</h1><h2>" + allItems[i].artistName + "</h2></button>";
+       }
+        document.getElementById("currFeedList").innerHTML = markup;
+        document.getElementById("currFeedListWrapper").style.display = "block";
+        document.getElementById("feedListWrapper").style.display = "none";
+      });
+    }
+
+    function itemSelected(index){
+      var feedData = currFeedData.feed.results[index];
+      var markup = JSON.stringify(feedData);
+      document.getElementById("feedDetails").innerHTML = markup;
+        document.getElementById("currFeedListWrapper").style.display = "none";
+        document.getElementById("feedDetailsWrapper").style.display = "block";
+    }
+
+    function backToFeeds(){
+        document.getElementById("currFeedListWrapper").style.display = "none";
+        document.getElementById("feedListWrapper").style.display = "block";
+    }
+
+    function backToItems(){
+        document.getElementById("currFeedListWrapper").style.display = "block";
+        document.getElementById("feedDetailsWrapper").style.display = "none";
+    }
+  </script>
+</head>
+
+<body onload='start()'>
+
+<div id='feedListWrapper'>
+  <div id='feedList'></div>
+  <textarea id='valA'></textarea>
+  <button onclick='addFeed()'> Add Feed </button>
+</div>
+
+<div id='currFeedListWrapper'>
+  <button onclick='backToFeeds()'> Back</button>
+  <button onclick='deleteFeed()'> Delete</button>
+  <div id='currFeedList'></div>
+</div>
+
+<div id='feedDetailsWrapper'>
+  <button onclick='backToItems()'> Back</button>
+  <div id='feedDetails'></div>
+</div>
+
+
+
+</body>
+
+</html>
