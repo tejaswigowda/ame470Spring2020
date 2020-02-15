@@ -1,0 +1,12 @@
+{
+  "name": "rssvierer-db",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "s",
+    "start": "node server.js"
+  },
+  "author": "tejaswigowda <tejaswi@foxyninjastudios.com>",
+  "license": "MIT"
+}
