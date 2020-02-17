@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 var errorHandler = require('errorhandler');
 var methodOverride = require('method-override');
 var hostname = process.env.HOSTNAME || 'localhost';
-var port = 1234;
+var port = 8080;
 var MS = require("mongoskin");
 
 var db = MS.db("mongodb://127.0.0.1:27017/rssParser")
