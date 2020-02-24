@@ -51,6 +51,22 @@ app.get("/addfeed", function (req, res) {
   });
 });
 
+
+app.get("/deletefeed", function (req, res) {
+    var id = parseInt(req.query.id);
+    var uID = req.query.userID;
+    var x = {
+      id:id,
+      userID: uID
+    }
+
+  db.collection("data").remove(x, function(err, result){
+    if(!err){
+      res.end("1");
+    }
+  });
+});
+
 app.get("/getallfeeds", function (req, res) {
     var uID = req.query.userID;
   db.collection("data").find({userID:uID}).toArray(function(err, result){

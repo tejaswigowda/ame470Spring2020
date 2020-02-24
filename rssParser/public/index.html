@@ -76,6 +76,7 @@ body.state0 #delButton{
   </style>
 
   <script>
+var currFeedID;
     function addFeed(){
       var uID = location.hash.replace("#","");
       var a = document.getElementById("valA").value;
@@ -84,7 +85,15 @@ body.state0 #delButton{
         getAllFeeds();
       });
     }
-
+    function deleteFeed(){
+      var uID = location.hash.replace("#","");
+      var a = currFeedID
+      var url = "./deletefeed?id=" + a + "&userID=" + uID
+      loadFile(url, function(data){
+        document.getElementById("currFeedList").innerHTML = "";
+        getAllFeeds();
+      });
+    }
     function start(){
       getAllFeeds();
     }
@@ -110,6 +119,7 @@ body.state0 #delButton{
     function feedSelected(index)
     {
       var url = allFeeds[index].url;
+      currFeedID = allFeeds[index].id;
       loadFile("./getrss?a=" + url, function(data){
        currFeedData = JSON.parse(data);
        var allItems = currFeedData.feed.results;
