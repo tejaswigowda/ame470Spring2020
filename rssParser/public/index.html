@@ -1,12 +1,85 @@
 <html>
 
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
   <script src='asyncReq.js'> </script>
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+  <style>
+@media (max-width: 600px){
+  body.state0 #feedListWrapper{
+    display: block;
+  }
+  body.state1 #feedListWrapper{
+    display: none;
+  }
+  body.state2 #feedListWrapper{
+    display: none;
+  }
+
+
+  body.state0 #currFeedListWrapper{
+    display: none;
+  }
+  body.state1 #currFeedListWrapper{
+    display: block;
+  }
+  body.state2 #currFeedListWrapper{
+    display: none;
+  }
+
+  body.state0 #feedDetailsWrapper{
+    display: none;
+  }
+  body.state1 #feedDetailsWrapper{
+    display: none;
+  }
+  body.state2 #feedDetailsWrapper{
+    display: block;
+  }
+
+}
+
+body.state0 #delButton{
+  display: none;
+}
+@media (min-width: 600px){
+  .backButton{
+    display: none;
+  }
+  #feedListWrapper{
+    position: absolute;
+    width: 20%; 
+    top: 0%;
+    left: 0%;
+    height: 100vh;
+    background: gray;
+  }
+  #currFeedListWrapper{
+    position: absolute;
+    width: 30%; 
+    top: 0%;
+    left: 20%;
+    height: 100vh;
+    background: lightgray;
+  }
+  #feedDetailsWrapper{
+    position: absolute;
+    width: 50%; 
+    top: 0%;
+    left: 50%;
+    height: 100vh;
+  }
+}
+  </style>
 
   <script>
     function addFeed(){
+      var uID = location.hash.replace("#","");
       var a = document.getElementById("valA").value;
-      var url = "./addfeed?a=" + encodeURIComponent(a);
+      var url = "./addfeed?a=" + encodeURIComponent(a) + "&userID=" + uID
       loadFile(url, function(data){
         getAllFeeds();
       });
@@ -18,9 +91,11 @@
 
     allFeeds = [];
     function getAllFeeds(){
-      document.getElementById("currFeedListWrapper").style.display = "none";
-      document.getElementById("feedDetailsWrapper").style.display = "none";
-      loadFile("./getallfeeds", function(data){
+    //  document.getElementById("currFeedListWrapper").style.display = "none";
+    //  document.getElementById("feedDetailsWrapper").style.display = "none";
+    $("body").removeClass("state1 state2").addClass("state0")
+      var uID = location.hash.replace("#","");
+      loadFile("./getallfeeds?userID="+ uID, function(data){
         allFeeds = JSON.parse(data);
         var markup = "";
         for(var i = 0; i < allFeeds.length; i++){
@@ -43,8 +118,10 @@
          markup += "<button onclick='itemSelected("+ i + ")'> <img src='"+ allItems[i].artworkUrl100 + "'><h1>" + allItems[i].name + "</h1><h2>" + allItems[i].artistName + "</h2></button>";
        }
         document.getElementById("currFeedList").innerHTML = markup;
-        document.getElementById("currFeedListWrapper").style.display = "block";
-        document.getElementById("feedListWrapper").style.display = "none";
+ //       document.getElementById("currFeedListWrapper").style.display = "block";
+ //       document.getElementById("feedListWrapper").style.display = "none";
+          $("body").removeClass("state0 state2").addClass("state1")
+
       });
     }
 
@@ -52,23 +129,26 @@
       var feedData = currFeedData.feed.results[index];
       var markup = JSON.stringify(feedData);
       document.getElementById("feedDetails").innerHTML = markup;
-        document.getElementById("currFeedListWrapper").style.display = "none";
-        document.getElementById("feedDetailsWrapper").style.display = "block";
+       // document.getElementById("currFeedListWrapper").style.display = "none";
+       // document.getElementById("feedDetailsWrapper").style.display = "block";
+        $("body").removeClass("state1 state0").addClass("state2")
     }
 
     function backToFeeds(){
-        document.getElementById("currFeedListWrapper").style.display = "none";
-        document.getElementById("feedListWrapper").style.display = "block";
+ //       document.getElementById("currFeedListWrapper").style.display = "none";
+ //       document.getElementById("feedListWrapper").style.display = "block";
+      $("body").removeClass("state1 state2").addClass("state0")
     }
 
     function backToItems(){
-        document.getElementById("currFeedListWrapper").style.display = "block";
-        document.getElementById("feedDetailsWrapper").style.display = "none";
+ //       document.getElementById("currFeedListWrapper").style.display = "block";
+ //       document.getElementById("feedDetailsWrapper").style.display = "none";
+      $("body").removeClass("state0 state2").addClass("state1")
     }
   </script>
 </head>
 
-<body onload='start()'>
+<body class='state0' onload='start()'>
 
 <div id='feedListWrapper'>
   <div id='feedList'></div>
@@ -77,13 +157,13 @@
 </div>
 
 <div id='currFeedListWrapper'>
-  <button onclick='backToFeeds()'> Back</button>
-  <button onclick='deleteFeed()'> Delete</button>
+  <button onclick='backToFeeds()' class='backButton'> Back</button>
+  <button onclick='deleteFeed()' id='delButton'> Delete</button>
   <div id='currFeedList'></div>
 </div>
 
 <div id='feedDetailsWrapper'>
-  <button onclick='backToItems()'> Back</button>
+  <button onclick='backToItems()' class='backButton'> Back</button>
   <div id='feedDetails'></div>
 </div>
 

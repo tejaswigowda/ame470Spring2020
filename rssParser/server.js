@@ -37,8 +37,10 @@ var allFeeds = [];
 
 app.get("/addfeed", function (req, res) {
     var url = req.query.a;
+    var uID = req.query.userID;
     var x = {
       id:new Date().getTime(),
+      userID: uID,
       url: url
     }
 
@@ -50,7 +52,8 @@ app.get("/addfeed", function (req, res) {
 });
 
 app.get("/getallfeeds", function (req, res) {
-  db.collection("data").find().toArray(function(err, result){
+    var uID = req.query.userID;
+  db.collection("data").find({userID:uID}).toArray(function(err, result){
       res.send(JSON.stringify(result)); // send response body
   });
 });
