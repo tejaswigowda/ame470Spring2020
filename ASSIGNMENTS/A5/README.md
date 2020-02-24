@@ -3,7 +3,7 @@
 
 ## Task
 
-Please write a tutorial (in html, atleast 1 page) that eplains how you
+Please write a tutorial (in html, atleast 1 page OR youtube video, atleast 8 mins) that explains how you
 deployed rssParser on AWS EC2.
 
 
