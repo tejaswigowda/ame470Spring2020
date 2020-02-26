@@ -48,6 +48,7 @@ app.get("/getsomeDBinfo", isLoggedIn, function(req, res){ //Make sure user is lo
 })
 
 app.listen(8080);
+console.log("App running at http://127.0.0.1:8080");
 
 
 
